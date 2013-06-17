@@ -131,10 +131,12 @@ Example: 1.0.0-alpha < 1.0.0-alpha.1 < 1.0.0-alpha.beta < 1.0.0-beta <
 Backus–Naur Form Grammar for Valid SemVer Versions
 --------------------------------------------------
 
-    <version> ::= <major> "." <minor> "." <patch>
-                | <major> "." <minor> "." <patch> "-" <pre-release>
-                | <major> "." <minor> "." <patch> "+" <build>
-                | <major> "." <minor> "." <patch> "-" <pre-release> "+" <build>
+    <valid semver> ::= <version core>
+                     | <version core> "-" <pre-release>
+                     | <version core> "+" <build>
+                     | <version core> "-" <pre-release> "+" <build>
+
+    <version core> ::= <major> "." <minor> "." <patch>
 
     <major> ::= <non-negative integer>
 
@@ -142,50 +144,64 @@ Backus–Naur Form Grammar for Valid SemVer Versions
 
     <patch> ::= <non-negative integer>
 
-    <pre-release> ::= <dot-separated identifiers>
+    <pre-release> ::= <dot-separated pre-release identifiers>
+
+    <dot-separated pre-release identifiers> ::= <pre-release identifier>
+                                              | <pre-release identifier> "." <dot-separated pre-release identifiers>
 
     <build> ::= <dot-separated build identifiers>
-
-    <dot-separated identifiers> ::= <identifier>
-                                  | <identifier> "." <dot-separated identifiers>
 
     <dot-separated build identifiers> ::= <build identifier>
                                         | <build identifier> "." <dot-separated build identifiers>
 
-    <identifier> ::= <non-negative integer>
-                   | <non-numeric identifier>
+    <pre-release identifier> ::= <alphanumeric identifier>
+                               | <numeric identifier>
 
-    <build identifier> ::= <identifier character>
-                         | <identifier character> <build identifier>
+    <build identifier> ::= <alphanumeric identifier>
+                         | <digits>
 
-    <non-numeric identifier> ::= <non-digit character>
-                               | <non-digit character> <build identifier>
-                               | <build identifier> <non-digit character>
-                               | <build identifier> <non-digit character> <build identifier>
+    <alphanumeric identifier> ::= <letters>
+                                | <letters> <identifier characters>
+                                | <digits> <non-digits>
+                                | <digits> <non-digits> <identifier characters>
+                                | <digits> <identifier characters> <non-digits>
+                                | <digits> <identifier characters> <non-digits> <identifier characters>
+                                | "-" <identifier characters>
 
-    <non-digit character> ::= <letter> | "-"
+    <numeric identifier> ::= "0"
+                           | <positive digit>
+                           | <positive digit> <digits>
 
-    <identifier character> ::= <non-digit character> | <digit>
+    <identifier characters> ::= <identifier character>
+                              | <identifier character> <identifier characters>
 
-    <non-negative integer> ::= "0"
-                             | <positive integer>
+    <identifier character> ::= <letter> 
+                             | <digit>
+                             | "-"
+    
+    <non-digits> ::= <non-digit>
+                   | <non-digit> <non-digits>
 
-    <positive integer> ::= <positive digit>
-                         | <positive digit> <digits>
+    <non-digit> ::= <letter>
+                  | "-"
 
     <digits> ::= <digit>
                | <digit> <digits>
 
-    <digit> ::= "0" | <positive digit>
+    <digit> ::= "0" 
+              | <positive digit>
 
     <positive digit> ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+    <letters> ::= <letter>
+                | <letter> <letters>
 
     <letter> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
                | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T"
                | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d"
                | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n"
                | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x"
-               | "y" | "z"
+               | "y" | "z" ;
 
 
 Why Use Semantic Versioning?
