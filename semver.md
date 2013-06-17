@@ -138,11 +138,11 @@ Backus–Naur Form Grammar for Valid SemVer Versions
 
     <version core> ::= <major> "." <minor> "." <patch>
 
-    <major> ::= <non-negative integer>
+    <major> ::= <numeric identifier>
 
-    <minor> ::= <non-negative integer>
+    <minor> ::= <numeric identifier>
 
-    <patch> ::= <non-negative integer>
+    <patch> ::= <numeric identifier>
 
     <pre-release> ::= <dot-separated pre-release identifiers>
 
