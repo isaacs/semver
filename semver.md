@@ -175,9 +175,8 @@ Backus–Naur Form Grammar for Valid SemVer Versions
     <identifier characters> ::= <identifier character>
                               | <identifier character> <identifier characters>
 
-    <identifier character> ::= <letter> 
-                             | <digit>
-                             | "-"
+    <identifier character> ::= <digit>
+                             | <non-digit>
     
     <non-digits> ::= <non-digit>
                    | <non-digit> <non-digits>
